@@ -18,6 +18,20 @@ public:
 private slots:
     void on_cmdInit_clicked();
 
+    void on_cmdGetSize_clicked();
+
+    void on_cmdGetPeerID_clicked();
+
+    void on_cmdGetVectors_clicked();
+
+    void on_cmdDeinit_clicked();
+
+    void on_cmdGetMemory_clicked();
+
+    void on_cmdWriteMemory_clicked();
+
+    void on_cmdWriteMemoryEdit_clicked();
+
 private:
     Ui::MainWindow *ui;
 };

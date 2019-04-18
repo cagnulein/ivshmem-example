@@ -6,12 +6,12 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
-    <height>300</height>
+    <width>520</width>
+    <height>356</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>ivshmem-example</string>
   </property>
   <widget class="QWidget" name="centralWidget">
    <widget class="QPushButton" name="cmdInit">
@@ -25,6 +25,107 @@
     </property>
     <property name="text">
      <string>Initialize</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="cmdGetSize">
+    <property name="geometry">
+     <rect>
+      <x>140</x>
+      <y>10</y>
+      <width>111</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>GetSize</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="cmdGetPeerID">
+    <property name="geometry">
+     <rect>
+      <x>260</x>
+      <y>10</y>
+      <width>111</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>GetPeerID</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="cmdDeinit">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>70</y>
+      <width>111</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Deinitialize</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="cmdGetVectors">
+    <property name="geometry">
+     <rect>
+      <x>380</x>
+      <y>10</y>
+      <width>111</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>GetVectors</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="cmdGetMemory">
+    <property name="geometry">
+     <rect>
+      <x>140</x>
+      <y>70</y>
+      <width>111</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>GetMemory</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="cmdWriteMemory">
+    <property name="geometry">
+     <rect>
+      <x>260</x>
+      <y>70</y>
+      <width>231</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Write &quot;Hello World!&quot; to Memory</string>
+    </property>
+   </widget>
+   <widget class="QPlainTextEdit" name="plainTextEdit">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>190</y>
+      <width>471</width>
+      <height>151</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="cmdWriteMemoryEdit">
+    <property name="geometry">
+     <rect>
+      <x>260</x>
+      <y>130</y>
+      <width>231</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Write Text Data to Memory</string>
     </property>
    </widget>
   </widget>
