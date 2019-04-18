@@ -22,9 +22,13 @@ Place, Suite 330, Boston, MA 02111-1307 USA
 #include <windows.h>
 #include <stdbool.h>
 #include "public.h"
+#include <QObject>
+#include "waitevent.h"
 
-class IVSHMEM
+class IVSHMEM : QObject
 {
+   Q_OBJECT
+
 public:
     IVSHMEM();
     ~IVSHMEM();
@@ -44,8 +48,9 @@ public:
   UINT16 GetPeerID();
   UINT16 GetVectors();
   void * GetMemory();
-  HANDLE CreateVectorEvent(UINT16 vector);
+  waitEvent* CreateVectorEvent(UINT16 vector);
   bool   RingDoorbell(UINT16 peerID, UINT16 door);
+  HANDLE getHandle();
 
 protected:
 
@@ -58,4 +63,5 @@ private:
   UINT16 m_peerID ; bool m_gotPeerID;
   void * m_memory ; bool m_gotMemory;
   UINT16 m_vectors; bool m_gotVectors;
+  QList<waitEvent*> waitVector;
 };

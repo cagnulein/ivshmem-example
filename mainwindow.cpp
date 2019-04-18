@@ -4,7 +4,8 @@
 #include <QDebug>
 #include <stdlib.h>
 #include <string.h>
-#include <QDateTime>
+#include "waitevent.h"
+#include "debug.h"
 
 static IVSHMEM* ivshmem = new IVSHMEM();
 static void* memory = nullptr;
@@ -43,13 +44,14 @@ void MainWindow::on_cmdGetVectors_clicked()
 
 void MainWindow::on_cmdDeinit_clicked()
 {
-    delete ivshmem;
+    if(ivshmem)
+        delete ivshmem;
     qDebug() << __FUNCTION__;
 }
 
 void MainWindow::on_cmdGetMemory_clicked()
 {
-    memory = ivshmem->GetMemory();
+    getReady();
     qDebug() << __FUNCTION__;
 
     QString s = "";
@@ -66,12 +68,42 @@ void MainWindow::on_cmdGetMemory_clicked()
     ui->plainTextEdit->setPlainText(s);
 }
 
+void MainWindow::getReady()
+{
+    if(!ivshmem->IsInitialized())
+        ivshmem->Initialize();
+    if(memory == nullptr)
+        memory = ivshmem->GetMemory();
+}
+
 void MainWindow::on_cmdWriteMemory_clicked()
 {
+    getReady();
     strcpy(static_cast<char*>(memory), "Hello World!\n");
 }
 
 void MainWindow::on_cmdWriteMemoryEdit_clicked()
 {
+    getReady();
     strcpy(static_cast<char*>(memory), ui->plainTextEdit->toPlainText().toLocal8Bit());
+}
+
+void MainWindow::on_cmdRegisterVector0_clicked()
+{
+    getReady();
+    waitEvent* w = ivshmem->CreateVectorEvent(0);
+    qRegisterMetaType<uint16_t>("uint16_t");
+    qRegisterMetaType<HANDLE>("HANDLE");
+
+    connect(w, SIGNAL(Event(uint16_t, HANDLE)), this, SLOT(eventVector(uint16_t, HANDLE)), Qt::UniqueConnection);
+}
+
+void MainWindow::eventVector(uint16_t vector, HANDLE  event)
+{
+    DEBUG_INFO("Event from Vector %d received!", vector);
+}
+
+void MainWindow::on_cmdRing_clicked()
+{
+    ivshmem->RingDoorbell(ui->linePeer->text().toInt(), 0);
 }

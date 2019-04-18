@@ -30,13 +30,15 @@ LIBS += 'C:/Program Files (x86)/Windows Kits/10/Lib/10.0.17763.0/um/x64/SetupAPI
 SOURCES += \
         main.cpp \
         mainwindow.cpp \
-    IVSHMEM.cpp
+    IVSHMEM.cpp \
+    waitevent.cpp
 
 HEADERS += \
         mainwindow.h \
     debug.h \
     IVSHMEM.h \
-    Public.h
+    Public.h \
+    waitevent.h
 
 FORMS += \
         mainwindow.ui

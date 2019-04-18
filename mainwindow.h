@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <windows.h>
 
 namespace Ui {
 class MainWindow;
@@ -32,8 +33,15 @@ private slots:
 
     void on_cmdWriteMemoryEdit_clicked();
 
+    void on_cmdRegisterVector0_clicked();
+
+    void eventVector(unsigned short vector, HANDLE  event);
+
+    void on_cmdRing_clicked();
+
 private:
     Ui::MainWindow *ui;
+    void getReady();
 };
 
 #endif // MAINWINDOW_H

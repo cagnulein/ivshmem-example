@@ -229,16 +229,16 @@ void * IVSHMEM::GetMemory()
   return m_memory;
 }
 
-HANDLE IVSHMEM::CreateVectorEvent(UINT16 vector)
+waitEvent* IVSHMEM::CreateVectorEvent(UINT16 vector)
 {
   if (!m_initialized)
-    return INVALID_HANDLE_VALUE;
+    return nullptr;
 
   HANDLE event = CreateEvent(NULL, TRUE, FALSE, NULL);
   if (event == INVALID_HANDLE_VALUE)
   {
     DEBUG_ERROR("CreateEvent Failed: %d", (int)GetLastError());
-    return INVALID_HANDLE_VALUE;
+    return nullptr;
   }
 
   IVSHMEM_EVENT msg;
@@ -250,10 +250,20 @@ HANDLE IVSHMEM::CreateVectorEvent(UINT16 vector)
   {
     DEBUG_ERROR("DeviceIoControl Failed: %d", (int)GetLastError());
     CloseHandle(event);
-    return INVALID_HANDLE_VALUE;
+    return nullptr;
   }
 
-  return event;
+  if(waitVector.size() <= vector || waitVector.at(vector) == nullptr)
+  {
+      waitVector.insert(vector, new waitEvent(vector, event));
+  }
+  if(!waitVector.at(vector)->isRunning())
+  {
+      waitVector.at(vector)->event = event;
+      waitVector.at(vector)->start();
+  }
+
+  return waitVector.at(vector);
 }
 
 bool IVSHMEM::RingDoorbell(UINT16 peerID, UINT16 door)
@@ -272,4 +282,9 @@ bool IVSHMEM::RingDoorbell(UINT16 peerID, UINT16 door)
   }
 
   return true;
+}
+
+HANDLE IVSHMEM::getHandle()
+{
+    return m_handle;
 }
